@@ -56,7 +56,7 @@ See the [SEIP Explanatory Supplement, section 3.3](https://irsa.ipac.caltech.edu
 After downloading the data, crop a manually specified box around the galaxy:
 
 ```python
-pipe.crop("NGC1566", size_arcmin=3, do_plot=True)
+pipe.crop("NGC1566", size_arcmin=5, do_plot=True)
 ```
 
 Or specify the box centre manually in ICRS degrees:
@@ -65,8 +65,8 @@ Or specify the box centre manually in ICRS degrees:
 pipe.crop("NGC1566", size_arcmin=3, center=(65.0042, -54.9378),
           bands=["3.6", "4.5", "5.8", "8.0", "24"], do_plot=True)
 ```
-
-The size is the full width of a square (3 × 3 arcmin), rounded to the native
+![NGC1566 plot](examples/NGC1566_cpd5arc.png)
+The size is the full width of a square (5 × 5 arcmin), rounded to the native
 pixel grid. No new archive query or download is needed. Matching science and
 uncertainty files are cropped using the same pixel rectangle; the WCS is
 checked and updated. Original pixel values, units and downloaded FITS files
