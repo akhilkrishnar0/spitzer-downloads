@@ -20,6 +20,10 @@ pipe.run(['NGC1566'], bands=['3.6','4.5','5.8','8.0','24'],
 
 The radius is an archive search radius, not a requested cutout size. All matching archive mosaics are preserved with native WCS and units. The archive search can include mosaics that intersect the search circle but do not contain the target centre. The inventory records whether the centre lies inside each FITS grid; this is not a test for valid exposure or full galaxy coverage. Multiple mosaics are not merged. Missing products are reported, not manufactured. `skip_download=True` reuses validated FITS files; `force_download=True` refreshes them. The search is repeated to discover the current archive inventory.
 
+## Archive query
+
+The SIA VOTable results are read using FIELD names rather than XML IDs. The parser identifies the data-access URL from the results resource and reports archive errors and returned columns if the field is missing.
+
 ## Products
 
 Default: `science` (`mosaic.fits`), `uncertainty` (`unc.fits`), `coverage` (`cov.fits`). Optional products include `std`, `mask`, `median_science`, `median_uncertainty`; availability is archive-dependent. Uncertainty and coverage retain their archive definitions, not converted to inverse variance.
