@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spitzer-downloads"
+version = "0.1.0"
+description = "Spitzer SEIP FITS downloads and diagnostic plots"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy", "astropy", "matplotlib", "requests"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["spitzer_pipeline_class", "spitzer_query"]
