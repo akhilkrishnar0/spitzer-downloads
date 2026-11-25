@@ -40,6 +40,34 @@ spitzer_data/NGC1566/
 ![NGC1566 diagnostic plot](examples/50070050.50070050-0.png)
 Each diagnostic shows available products by band for the same mosaic prefix, with a target-centre marker when inside the grid. Native shapes may differ. Full mosaics can be large. No actual NGC1566 availability is assumed.
 
+## Crop downloaded science and uncertainty images
+
+After downloading the data, crop a manually specified box around the galaxy:
+
+```python
+pipe.crop("NGC1566", size_arcmin=3, do_plot=True)
+```
+
+Or specify the box centre manually in ICRS degrees:
+
+```python
+pipe.crop("NGC1566", size_arcmin=3, center=(65.0042, -54.9378),
+          bands=["3.6", "4.5", "5.8", "8.0", "24"], do_plot=True)
+```
+
+The size is the full width of a square (3 × 3 arcmin), rounded to the native
+pixel grid. No new archive query or download is needed. Matching science and
+uncertainty files are cropped using the same pixel rectangle; the WCS is
+checked and updated. Original pixel values, units and downloaded FITS files
+are preserved. No interpolation or photometric analysis is performed. Partial
+footprints are padded with NaN and reported in the inventory; pairs with
+mismatched grids or missing products are skipped. Separate mosaics and native
+band pixel scales are retained.
+
+Outputs are in `spitzer_data/NGC1566/crops/<size_and_center>/`, with science
+and uncertainty FITS per band and mosaic, a crop inventory, and two-row
+diagnostic figures under `plots/`.
+
 ## References
 
 - [IRSA SEIP image search](https://irsa.ipac.caltech.edu/data/SPITZER/Enhanced/SEIP/)
