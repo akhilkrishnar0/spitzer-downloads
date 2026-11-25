@@ -21,6 +21,8 @@ def test_native_crop(tmp_path):
     fits.writeto(folder/"example.IRAC.1.unc.fits", image+1, h)
     result = pipe.crop("test", size_arcmin=3, do_plot=False)
     pair = result[("3.6", prefix)]
+    assert pair["science"].name == "example_3.6um_science_test.fits"
+    assert pair["uncertainty"].name == "example_3.6um_uncertainty_test.fits"
     sci, sh = fits.getdata(pair["science"], header=True)
     unc = fits.getdata(pair["uncertainty"])
     assert sci.shape == (180,180)

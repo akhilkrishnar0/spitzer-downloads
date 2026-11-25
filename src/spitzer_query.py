@@ -28,7 +28,7 @@ class SpitzerQuery:
     def __init__(self, timeout=(30, 180)):
         self.timeout = timeout
         self.session = requests.Session()
-        self.session.headers['User-Agent'] = 'spitzer-downloads/0.1.1'
+        self.session.headers['User-Agent'] = 'spitzer-downloads/0.1.3'
 
     def search(self, ra, dec, radius_arcmin=6):
         if not 0 <= float(ra) < 360 or not -90 <= float(dec) <= 90:

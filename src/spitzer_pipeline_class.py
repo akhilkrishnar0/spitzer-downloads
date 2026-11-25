@@ -59,7 +59,7 @@ class SpitzerPipeline:
         root = self.base_dir / self.clean_name(target)
         root.mkdir(parents=True, exist_ok=True)
         table = self.query.search(coord.ra.deg, coord.dec.deg, radius)
-        table.write(root/'archive_query.ecsv', format='ascii.ecsv', overwrite=True)
+        table.write(root/f'archive_query_{self.clean_name(target)}.ecsv', format='ascii.ecsv', overwrite=True)
         groups = {}
         records = []
         seen = set()
@@ -96,7 +96,7 @@ class SpitzerPipeline:
                 warnings.warn(f'{target}: {name}: {exc}')
             records.append(record)
         fields = ('band', 'mosaic', 'product', 'url', 'path', 'status', 'center_pixel', 'shape', 'bunit')
-        with (root/'inventory.csv').open('w', newline='') as f:
+        with (root/f'inventory_{self.clean_name(target)}.csv').open('w', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=fields)
             writer.writeheader()
             writer.writerows(records)
@@ -209,7 +209,7 @@ class SpitzerPipeline:
                         h["IMAGEH"] = data.shape[0]
                     h.add_history(f"Native pixel cutout: requested {size:g} arcmin square; no resampling.")
                     h.add_history("Outside original footprint is NaN.")
-                    path = folder / f"{kind}.fits"
+                    path = folder / f"{prefix}_{band}um_{kind}_{self.clean_name(target)}.fits"
                     fits.writeto(path, data, h, overwrite=True)
                     cropped[kind] = path
                     record[kind] = str(path)
@@ -222,7 +222,7 @@ class SpitzerPipeline:
                 record["status"] = f"skipped: {exc}"
                 warnings.warn(f"{target}: {band} um {prefix}: {exc}")
             records.append(record)
-        with (out / "inventory.csv").open("w", newline="") as f:
+        with (out / f"inventory_{self.clean_name(target)}.csv").open("w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=("band", "mosaic", "status", "science", "uncertainty"))
             writer.writeheader()
             writer.writerows(records)
@@ -266,6 +266,6 @@ class SpitzerPipeline:
                         ax.set_title(f'{band} μm {kind}')
                 fig.suptitle(f'{target} — {prefix} ({title_suffix})')
                 fig.tight_layout()
-                fig.savefig(out/f'{prefix}.png',dpi=150,bbox_inches='tight')
+                fig.savefig(out/f'{prefix}_{self.clean_name(target)}.png',dpi=150,bbox_inches='tight')
             finally:
                 plt.close(fig)

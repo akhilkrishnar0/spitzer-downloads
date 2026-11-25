@@ -32,13 +32,24 @@ Default: `science` (`mosaic.fits`), `uncertainty` (`unc.fits`), `coverage` (`cov
 
 ```
 spitzer_data/NGC1566/
-    archive_query.ecsv
-    inventory.csv
+    archive_query_NGC1566.ecsv
+    inventory_NGC1566.csv
     downloads/<band>um/<mosaic-prefix>/<original-filename>
-    plots/<mosaic-prefix>.png
+    plots/<mosaic-prefix>_NGC1566.png
 ```
 ![NGC1566 diagnostic plot](examples/50070050.50070050-0.png)
 Each diagnostic shows available products by band for the same mosaic prefix, with a target-centre marker when inside the grid. Native shapes may differ. Full mosaics can be large. No actual NGC1566 availability is assumed.
+
+## Standard and short-exposure mosaics
+
+For IRAC observations taken in high-dynamic-range (HDR) mode, SEIP constructs separate mosaics from short and long exposures. The archive assigns the short-exposure region a `-short` suffix. The corresponding region without this suffix is the standard mosaic (long-exposure mosaic for HDR observations). Short exposures help avoid saturation in bright regions; longer exposures generally offer greater sensitivity to faint emission. Inspect the FITS headers, coverage and saturation before selecting a mosaic. The package keeps both exposure groups separate and does not combine them.
+
+For example, diagnostic filenames for NGC1566 are:
+
+- `50070050.50070050-0-short_NGC1566.png` — short-exposure mosaic, if available.
+- `50070050.50070050-0_NGC1566.png` — standard mosaic.
+
+See the [SEIP Explanatory Supplement, section 3.3](https://irsa.ipac.caltech.edu/data/SPITZER/Enhanced/SEIP/docs/seip_explanatory_supplement_v3.pdf) and [IRSA SIA v2 SEIP example](https://irsa.ipac.caltech.edu/docs/program_interface/siav2_seip.html).
 
 ## Crop downloaded science and uncertainty images
 
@@ -67,6 +78,8 @@ band pixel scales are retained.
 Outputs are in `spitzer_data/NGC1566/crops/<size_and_center>/`, with science
 and uncertainty FITS per band and mosaic, a crop inventory, and two-row
 diagnostic figures under `plots/`.
+
+Final cropped FITS filenames follow `<mosaic-prefix>_<band>um_<product>_<galaxy>.fits`, e.g. `50070050.50070050-0_3.6um_science_NGC1566.fits`. Both full-mosaic and cropped diagnostic PNGs, and generated inventory/query tables, end with the galaxy name. Original downloaded archive FITS filenames remain unchanged to preserve provenance and allow reuse without downloading again. Previously generated files are not renamed or deleted; rerun the relevant method to generate the new names.
 
 ## References
 
