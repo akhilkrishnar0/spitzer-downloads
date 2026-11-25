@@ -228,11 +228,12 @@ class SpitzerPipeline:
             writer.writerows(records)
         if do_plot and results:
             self.plot(target, coord, results, ("science", "uncertainty"), size,
-                      output_dir=out/"plots", title_suffix=f"{size:g} arcmin crop")
+                      title_suffix=f"{size:g} arcmin crop",
+                      filename_suffix=f"_crop_{size:g}arcmin_RA{coord.ra.deg:.6f}_Dec{coord.dec.deg:+.6f}")
         print(f"Crop output: {out}")
         return results
 
-    def plot(self, target, coord, groups, products, radius_arcmin, output_dir=None, title_suffix='native mosaics'):
+    def plot(self, target, coord, groups, products, radius_arcmin, output_dir=None, title_suffix='native mosaics', filename_suffix=''):
         out = Path(output_dir) if output_dir is not None else self.base_dir/self.clean_name(target)/'plots'
         out.mkdir(parents=True, exist_ok=True)
         # One plot per mosaic prefix, not arbitrary pairing across observations.
@@ -266,6 +267,6 @@ class SpitzerPipeline:
                         ax.set_title(f'{band} μm {kind}')
                 fig.suptitle(f'{target} — {prefix} ({title_suffix})')
                 fig.tight_layout()
-                fig.savefig(out/f'{prefix}_{self.clean_name(target)}.png',dpi=150,bbox_inches='tight')
+                fig.savefig(out/f'{prefix}{filename_suffix}_{self.clean_name(target)}.png',dpi=150,bbox_inches='tight')
             finally:
                 plt.close(fig)

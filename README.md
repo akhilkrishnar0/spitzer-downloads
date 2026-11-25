@@ -76,8 +76,9 @@ mismatched grids or missing products are skipped. Separate mosaics and native
 band pixel scales are retained.
 
 Outputs are in `spitzer_data/NGC1566/crops/<size_and_center>/`, with science
-and uncertainty FITS per band and mosaic, a crop inventory, and two-row
-diagnostic figures under `plots/`.
+and uncertainty FITS per band and mosaic, plus a crop inventory. All diagnostic PNGs (full mosaics and crops) are saved together in `spitzer_data/NGC1566/plots/`. Cropped plots include `_crop_`, the box size and centre coordinates before the galaxy suffix to avoid overwriting plots from different crops.
+
+Example: `50070050.50070050-0_crop_3arcmin_RA65.004200_Dec-54.937800_NGC1566.png`.
 
 Final cropped FITS filenames follow `<mosaic-prefix>_<band>um_<product>_<galaxy>.fits`, e.g. `50070050.50070050-0_3.6um_science_NGC1566.fits`. Both full-mosaic and cropped diagnostic PNGs, and generated inventory/query tables, end with the galaxy name. Original downloaded archive FITS filenames remain unchanged to preserve provenance and allow reuse without downloading again. Previously generated files are not renamed or deleted; rerun the relevant method to generate the new names.
 
