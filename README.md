@@ -37,7 +37,7 @@ spitzer_data/NGC1566/
     downloads/<band>um/<mosaic-prefix>/<original-filename>
     plots/<mosaic-prefix>.png
 ```
-
+![NGC1566 diagnostic plot](example/50070050.50070050-0.png)
 Each diagnostic shows available products by band for the same mosaic prefix, with a target-centre marker when inside the grid. Native shapes may differ. Full mosaics can be large. No actual NGC1566 availability is assumed.
 
 ## References
